@@ -1,0 +1,61 @@
+# ============ SECRETS (never upload these) ============
+.env
+.env.*
+*.env
+!example.env
+key.properties
+*.jks
+*.keystore
+google-services.json
+GoogleService-Info.plist
+
+# ============ BACKEND (Node) ============
+node_modules/
+npm-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# ============ FLUTTER / DART ============
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+*.iml
+pubspec.lock
+*.g.dart
+*.freezed.dart
+.metadata
+
+# ============ ANDROID ============
+**/android/.gradle/
+**/android/local.properties
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/**/GeneratedPluginRegistrant.*
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+*.apk
+*.aab
+
+# ============ WINDOWS / LINUX / MAC BUILD FILES ============
+**/windows/flutter/ephemeral/
+**/linux/flutter/ephemeral/
+**/macos/Flutter/ephemeral/
+**/ios/Flutter/ephemeral/
+**/ios/Pods/
+**/ios/.symlinks/
+
+# ============ EDITORS AND OS ============
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini

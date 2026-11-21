@@ -1,0 +1,811 @@
+WIRELESS AUDIO ECOSYSTEM Complete Product Knowledge and Technical
+Blueprint Document status: Proposed product specification Version: 1.0
+Date: 20 November 2026
+
+============================================================ 1. PRODUCT
+OVERVIEW ============================================================
+
+Working name: TBD Product category: Cross-device real-time audio
+streaming and routing. Initial platforms: Windows desktop and Android.
+Core purpose: Allow users to securely connect compatible devices and
+stream audio wirelessly in real time.
+
+Product vision: Create a polished, reliable, low-latency wireless audio
+ecosystem. Users should be able to discover devices, pair them securely,
+choose an audio source and receiver, start streaming, monitor connection
+quality, manage devices, and customize the experience.
+
+Product identity: - Product identity: wireless audio-transfer and
+device-management application. - Visual identity: dark cyberpunk,
+underground street culture, graffiti, modified cars, neon lighting and
+music-inspired visuals. - Design principle: functionality first,
+distinctive visual personality second. - Suggested balance:
+approximately 75% functional interface and 25% cyberpunk personality.
+
+The application is not intended to be: - A social network. - A chat
+application. - A general file-sharing application. - A replacement for a
+full digital audio workstation. - A music streaming service.
+
+Core value proposition: Make wireless audio streaming between personal
+devices simple, dependable, secure and easy to troubleshoot.
+
+============================================================ 2. PRODUCT
+PRINCIPLES ============================================================
+
+1.  Audio reliability is more important than visual effects.
+2.  Pairing and starting a stream should be simple.
+3.  Local audio should preferably travel directly between devices rather
+    than through the backend.
+4.  Users should retain control over their devices, permissions and
+    data.
+5.  The first release should focus on one dependable use case.
+6.  Advanced features must earn their place through real user value.
+7.  Never claim a performance target is achieved until it has been
+    measured.
+8.  Guest/local use should be possible without forcing account creation,
+    where technically practical.
+9.  Security must be enforced by backend and native clients, not merely
+    by hiding interface controls.
+10. The product should explain connection failures in understandable
+    language.
+
+============================================================ 3. INITIAL
+SCOPE AND RELEASE STRATEGY
+============================================================
+
+Recommended first use case: Windows PC -> Android phone.
+
+Version 1 should prove: - Windows system audio capture. - Secure local
+device pairing. - Audio encoding and real-time transmission. - Android
+audio playback. - Volume and session controls. - Connection status and
+useful diagnostics. - Reliable stop, disconnect and recovery behaviour.
+
+Do not initially promise: - Unrestricted capture of all Android
+application audio. - Internet streaming from anywhere. - Perfect
+multi-device synchronization. - Every operating system. - Protected
+audio capture where the source application or platform blocks it.
+
+Suggested future expansion: - Android -> Windows streaming. - Multiple
+receivers. - Saved connection profiles. - Equalizer and audio presets. -
+Remote/internet streaming with relay support where required. - More
+desktop platforms. - Advanced audio routing.
+
+============================================================ 4.
+PLATFORMS AND CLIENT APPLICATIONS
+============================================================
+
+Windows desktop client: - Main desktop interface. - Native system audio
+capture. - Device discovery and pairing. - Audio source and receiver
+selection. - Streaming controls. - Diagnostics. - System tray and
+background operation. - Update mechanism.
+
+Android client: - Mobile interface. - Device discovery and pairing. -
+Audio receiver and playback. - Background playback using appropriate
+Android service requirements. - Connection notifications. - Device and
+session management. - Mobile-specific permissions and battery behaviour.
+
+Potential later clients: - macOS. - Linux. - Additional mobile
+platforms, subject to native audio capabilities and development cost.
+
+Recommended implementation options: Option A: - Windows: Tauri + React +
+Rust native audio engine. - Android: Flutter UI + Kotlin native audio
+integration. - Backend: Node.js + Express. - Database: MongoDB. -
+Real-time media: WebRTC.
+
+Option B: - Flutter interfaces for both desktop and Android. - Native
+platform plugins for audio capture, playback and system integration. -
+Node.js backend and MongoDB. - WebRTC media transport.
+
+Trade-off: Flutter can improve UI reuse, but it does not remove the need
+for native Windows and Android audio integration. Tauri/React plus Rust
+is a strong lightweight Windows option, but introduces a separate
+desktop stack. Choose based on the developer’s experience and the
+reliability of native audio integration.
+
+============================================================ 5. USER
+NAVIGATION AND INFORMATION ARCHITECTURE
+============================================================
+
+Desktop primary navigation: 1. Home 2. Devices 3. Audio Studio 4.
+Sessions 5. Statistics 6. Security 7. Settings 8. Help and Support 9.
+Profile/account area
+
+Mobile primary navigation: - Home - Devices - Sessions - Profile Other
+tools and settings can live under More or Settings.
+
+The desktop and mobile interfaces should share a design language but use
+layouts appropriate to each screen size.
+
+============================================================ 6. HOME
+DASHBOARD ============================================================
+
+Purpose: Give users an immediate understanding of device availability,
+connection state and active audio streaming.
+
+Suggested components: - Greeting and profile shortcut. - Current
+connection status. - Nearby devices. - Quick Connect action. - Active
+streaming session. - Start, pause, resume, stop and disconnect
+controls. - Audio visualizer during active streaming. - Network quality
+indicator. - Recent devices. - Recent sessions. - Notifications and
+security alerts. - Shortcuts to Audio Studio and Settings.
+
+Design rule: Do not let a decorative visualizer dominate the screen when
+no stream is active. Make active streaming information prominent when it
+is relevant.
+
+============================================================ 7. DEVICES
+PANEL ============================================================
+
+Purpose: Discover, pair, manage and revoke access to devices.
+
+Features: - Scan/discover compatible nearby devices. - Search available
+devices. - QR-code pairing. - Temporary pairing code as an
+alternative. - Manual local connection where supported. - Trusted-device
+list. - Rename device. - Set a nickname. - View device type and
+operating system. - View app version. - View last-seen time. - View
+connection state. - View supported audio capabilities. - View active
+sessions. - Disconnect. - Forget device. - Revoke trust. - Block a
+device. - Manage pairing permissions.
+
+Device detail fields: - Device ID. - Display name. - Device type. -
+Operating system and version. - Application version. - Supported
+capabilities. - Trust status. - Last seen. - Active session
+information. - Connection diagnostics where appropriate.
+
+Privacy: Do not expose local IP addresses, hardware identifiers or other
+sensitive device information unnecessarily.
+
+============================================================ 8. AUDIO
+STUDIO ============================================================
+
+Purpose: Provide the controls for configuring and operating an audio
+stream.
+
+Core features: - Select audio source. - Select receiver device. - Start
+streaming. - Pause/resume where supported by the implementation. - Stop
+streaming. - Mute. - Volume control. - Quality presets. - Supported
+codec information. - Target bitrate controls. - Mono/stereo selection
+where supported. - Latency indicator. - Jitter and packet-loss
+indicators. - Buffer information. - Audio activity visualizer. - Session
+status and duration.
+
+Possible later features: - Equalizer. - Bass boost. - Saved audio
+profiles. - Per-device volume. - Multiple receiver routing. -
+Application-specific audio source selection where OS APIs permit it. -
+Advanced audio mixing.
+
+Quality presets should correspond to real, documented configuration
+values. They should not be decorative labels.
+
+============================================================ 9. SESSIONS
+PANEL ============================================================
+
+Purpose: Show a user’s previous and current streaming sessions.
+
+Session information: - Session ID. - Sender device. - Receiver device or
+devices. - Start time. - End time. - Duration. - Average bitrate. -
+Average measured latency. - Reconnection count. - Connection quality
+summary. - Termination reason.
+
+User actions: - View session details. - Search sessions. - Filter by
+device. - Delete selected history. - Clear all history.
+
+Privacy rule: Do not record or store actual audio content as part of
+ordinary session history.
+
+Separate temporary live session state from permanent historical session
+records.
+
+============================================================ 10.
+STATISTICS PANEL
+============================================================
+
+Possible statistics: - Total streaming time. - Number of sessions. -
+Most-used devices. - Average measured latency. - Average bitrate. -
+Connection failures. - Reconnection frequency. - Data transferred. -
+Quality distribution. - Session duration trends.
+
+Statistics must come from measured data. Distinguish measured, estimated
+and unavailable values.
+
+============================================================ 11. USER
+PROFILE AND ACCOUNT
+============================================================
+
+Profile fields: - Profile picture. - Display name. - Username. - Email
+address. - Optional phone number. - Account creation date. - Account
+status. - Account identifier.
+
+Actions: - Edit profile. - Change profile picture. - Change display
+name. - Change email. - Verify email. - Manage optional phone
+verification. - Manage connected sign-in methods if supported. - Sign
+out. - Sign out from all sessions. - Export account information. -
+Request account deletion.
+
+Account strategy: Do not force registration before a user can try local
+discovery and basic local streaming, if the architecture allows it.
+Accounts can support cloud synchronization, account recovery and
+management across devices. Guest mode can support local use.
+
+============================================================ 12. USER
+SETTINGS ============================================================
+
+12.1 Account and Profile - Edit personal information. - Manage email
+verification. - Manage optional phone verification. - Manage connected
+accounts. - View account status. - Sign out from all devices. - Export
+account information. - Request account deletion.
+
+12.2 Audio Settings General: - Default audio source. - Default
+receiver. - Default output device. - Default volume. - Remember
+last-used device. - Restore previous session preferences.
+
+Quality: - Low bandwidth preset. - Balanced preset. - High quality
+preset. - Custom bitrate where supported. - Codec information and
+selection where supported. - Buffer configuration where exposed
+safely. - Mono/stereo configuration where supported.
+
+Behaviour: - Auto-connect to trusted devices. - Auto-reconnect. - Stop
+streaming when receiver is unavailable. - Background streaming
+preferences. - Session restoration preferences.
+
+12.3 Devices and Connections - Enable/disable discovery. - Preferred
+connection method. - Local network permission status. - Automatic
+pairing preferences. - Trusted-device list. - Maximum simultaneous
+receivers, if supported. - Connection timeout. - Reconnection policy. -
+Remove saved devices. - Block unknown pairing requests.
+
+12.4 Personalization Suggested themes: - Midnight Purple. - Neon
+Cyber. - Underground Garage. - Dark Minimal. - AMOLED Black. - Light
+Mode.
+
+Customization: - Primary accent. - Secondary accent. - Background
+style. - Card transparency. - Sidebar style. - Compact or comfortable
+layout. - Animation intensity. - Sound effects. - Visualizer style. -
+Background artwork. - Reduced motion.
+
+Do not expose unlimited arbitrary styling in the first release. Too many
+combinations can create inconsistent and inaccessible interfaces.
+
+12.5 Password and Security Authentication: - Change password. - Password
+reset. - Email verification. - Optional two-factor authentication. -
+Passkey support if implemented. - Active login sessions. - Sign out from
+all sessions.
+
+Device security: - Trusted devices. - Pairing approval. - Revoke device
+access. - Expire pairing tokens. - Block unknown devices. - View
+security events.
+
+Security principles: - Never store plaintext passwords. - Use a modern
+password hashing algorithm such as Argon2id or bcrypt with appropriate
+parameters. - Use secure, short-lived access credentials and carefully
+managed refresh sessions. - Rate-limit authentication and pairing
+endpoints. - Use TLS for backend communications. - Use authenticated,
+encrypted media transport. - Do not use a user’s password directly as an
+audio encryption key. - Do not store raw private keys or pairing secrets
+in ordinary database fields.
+
+12.6 Notifications Categories: - Device connected. - Device
+disconnected. - Streaming started/stopped. - Pairing request. - Security
+alert. - Application update. - Background service status.
+
+Controls: - Enable/disable notification categories. - Desktop
+notifications. - Mobile notifications. - Sound alerts. - Do Not
+Disturb. - Notification history.
+
+12.7 Privacy - Analytics opt-in/opt-out. - Crash report sharing. -
+Diagnostic data sharing. - Local session history. - Account data
+export. - Delete personal information. - Permission management. -
+Privacy policy.
+
+Collect only data needed to operate, secure and improve the service. Do
+not collect audio content for ordinary analytics.
+
+12.8 Accessibility - Adjustable font size. - High contrast. - Reduced
+motion. - Screen reader support. - Keyboard navigation. - Visible focus
+indicators. - Visualizer alternatives. - Accessible error messages.
+
+12.9 Language and Region - Interface language. - Date format. - Time
+format. - Region preferences. - Future localization support.
+
+12.10 Storage and Data - Cache size. - Clear cache. - Clear session
+history. - Export diagnostic logs. - Export settings. - Import
+settings. - Backup preferences. - Storage usage.
+
+12.11 Application Settings - Launch on startup. - Minimize to system
+tray. - Run in background. - Close to tray or fully exit. - Check for
+updates. - Automatic updates. - Startup behaviour. - Default window
+size. - System integration. - App version and build information.
+
+12.12 About - Application name and logo. - Version and build number. -
+Release channel. - Copyright. - Developer information. - Official
+website. - Open-source licences and acknowledgements. - Privacy
+policy. - Terms of service. - Changelog. - Check for updates. - Report a
+problem.
+
+12.13 Help and Support - Setup guide. - Pairing guide. -
+Troubleshooting. - Frequently asked questions. - Diagnostic report
+export. - Feedback form. - Bug report. - Contact/support links.
+
+============================================================ 13.
+TECHNICAL DIAGNOSTICS PANEL
+============================================================
+
+Purpose: Help users and developers understand the current audio and
+network state.
+
+Metrics: - End-to-end audio latency, when measurable. - Network
+round-trip time as a separate metric. - Jitter. - Packet loss. - Current
+bitrate. - Sample rate. - Channel count. - Codec. - Buffer state. -
+Network quality. - CPU usage. - Memory usage. - Reconnection count. -
+Session uptime. - Audio capture/playback errors.
+
+Important: Network ping is not the same as end-to-end audio latency. The
+app must not present one as the other.
+
+A connection troubleshooter should test: - Sender online state. -
+Receiver online state. - Audio capture permission. - Audio playback
+availability. - Network reachability. - Firewall and network
+restrictions. - Codec compatibility. - Pairing/trust state. - Background
+service state. - Relevant platform restrictions.
+
+============================================================ 14. AUDIO
+ENGINE ARCHITECTURE
+============================================================
+
+Proposed pipeline:
+
+1.  Audio source capture.
+2.  Audio processing and format conversion.
+3.  Encoding, preferably with Opus as an initial candidate.
+4.  Packetization and secure transport.
+5.  Receiver jitter buffering.
+6.  Decoding.
+7.  Audio output playback.
+8.  Measurement and reporting of connection statistics.
+
+Windows: - WASAPI loopback is the primary candidate for capturing system
+playback audio. - Native C++ or Rust integration may be appropriate. -
+Handle audio-device changes, sample formats and capture failures.
+
+Android: - AudioPlaybackCapture is available on supported Android
+versions, subject to user permission and source-application capture
+policy. - Some applications can prevent their audio from being
+captured. - AudioTrack is a candidate for audio output. - Background
+playback and foreground-service requirements must be handled according
+to the Android version and current platform rules.
+
+Important limitation: Android system audio capture is not unrestricted.
+Some source apps and protected content cannot be captured. Do not
+promise universal capture.
+
+============================================================ 15.
+NETWORKING AND REAL-TIME COMMUNICATION
+============================================================
+
+Recommended initial approach: - WebRTC for real-time media transport. -
+Opus as an audio codec candidate. - Secure signaling over WebSocket. -
+Local device discovery using mDNS or another suitable local discovery
+method. - QR pairing or short-lived pairing codes. - Direct local media
+connection where possible.
+
+WebRTC advantages: - Established real-time media architecture. -
+Encryption support through its media security mechanisms. - Jitter
+handling and congestion-control capabilities. - Less custom networking
+code than a fully custom UDP design.
+
+Custom UDP trade-off: - More transport control. - More responsibility
+for reliability, congestion control, encryption, jitter buffering and
+interoperability. - Not recommended for the first release unless a
+measured limitation justifies it.
+
+Internet streaming: - Local Wi-Fi streaming and internet streaming are
+different problems. - NAT traversal may require STUN and TURN. - A relay
+can increase bandwidth cost and latency. - Do not assume local direct
+connectivity will work across the public internet.
+
+Audio should preferably travel directly between devices on a local
+network. The backend should handle identity, authorization, pairing,
+signaling, configuration and account management rather than relaying
+every audio packet.
+
+============================================================ 16. BACKEND
+ARCHITECTURE — NODE.JS
+============================================================
+
+Recommended backend: - Node.js. - Express. - MongoDB with Mongoose or
+another suitable data layer. - WebSocket signaling service. -
+Authentication and authorization middleware. - Request validation. -
+Rate limiting. - Structured logging. - Automated tests.
+
+Backend responsibilities: - Authentication. - User profiles. - Device
+registry. - Pairing requests and approvals. - Signaling. - Session
+metadata. - User preferences. - Notifications. - Feedback. - Analytics
+metadata. - Security events. - Administration.
+
+Suggested folder structure:
+
+backend/ src/ config/ database.js environment.js security.js models/
+User.js Device.js Pairing.js Session.js UserSettings.js Notification.js
+Feedback.js AuditLog.js controllers/ authController.js userController.js
+deviceController.js pairingController.js sessionController.js
+adminController.js routes/ authRoutes.js userRoutes.js deviceRoutes.js
+pairingRoutes.js sessionRoutes.js middleware/ authenticate.js
+authorize.js rateLimiter.js validateRequest.js services/ authService.js
+deviceService.js pairingService.js signalingService.js
+notificationService.js sockets/ signalingSocket.js utils/ server.js
+tests/ package.json .env
+
+This is a suggested structure. Files should be added as the
+corresponding features are implemented, not all at once.
+
+============================================================ 17.
+PROPOSED API DESIGN
+============================================================
+
+Authentication: POST /api/auth/register POST /api/auth/login POST
+/api/auth/logout POST /api/auth/refresh
+
+User: GET /api/users/me PATCH /api/users/me GET /api/users/me/settings
+PATCH /api/users/me/settings
+
+Devices: GET /api/devices POST /api/devices/register PATCH
+/api/devices/:id DELETE /api/devices/:id
+
+Pairing: POST /api/pairings POST /api/pairings/:id/approve
+
+Sessions: GET /api/sessions GET /api/sessions/:id
+
+Feedback: POST /api/feedback
+
+Admin: Separate protected admin routes should be created for user,
+device, session metadata, analytics, security, feedback and platform
+management.
+
+All routes must enforce authentication, ownership and role permissions
+as appropriate. Never trust a user-supplied user ID to establish
+ownership. Derive the authenticated identity from a verified
+session/token and check resource ownership on the server.
+
+Real-time signaling should use an authenticated WebSocket connection or
+another appropriately secured signaling channel.
+
+The REST API should not be used to send raw audio packets.
+
+============================================================ 18.
+DATABASE DESIGN — MONGODB
+============================================================
+
+Recommended collections: 1. users 2. devices 3. userSettings 4. pairings
+5. sessions 6. notifications 7. feedback 8. auditLogs
+
+Users document: { _id, username, displayName, email, passwordHash, role:
+“user”, accountStatus: “active”, emailVerified: false, createdAt,
+updatedAt }
+
+Devices document: { _id, userId, deviceName, deviceType: “windows”,
+appVersion, capabilities: { audioCapture: true, audioPlayback: true },
+trustStatus: “trusted”, lastSeen, createdAt }
+
+UserSettings document: { _id, userId, theme: “midnight-purple”,
+accentColor: “#8B5CF6”, language: “en”, notifications: {
+connectionAlerts: true, securityAlerts: true }, audio: { quality:
+“balanced”, autoReconnect: true }, privacy: { analyticsEnabled: false }
+}
+
+Pairings document: { _id, initiatorDeviceId, receiverDeviceId,
+ownerUserId, status: “pending”, expiresAt, approvedAt, createdAt }
+
+Sessions document: { _id, userId, senderDeviceId, receiverDeviceIds: [],
+status: “completed”, startedAt, endedAt, duration, averageBitrate,
+averageLatency, reconnectCount }
+
+Notifications document: { _id, userId, type: “device_connected”, title,
+message, read: false, createdAt }
+
+Feedback document: { _id, userId, category, description, appVersion,
+status: “open”, createdAt }
+
+AuditLogs document: { _id, actorId, actorRole, action, targetType,
+targetId, result, createdAt }
+
+Database design rules: - Add indexes for frequently queried fields. -
+Enforce unique constraints where needed, such as normalized account
+email. - Use TTL indexes for temporary pairing requests and expiring
+records where appropriate. - Keep live session state separate from
+permanent history. - Define retention and deletion policies. - Do not
+store plaintext passwords, raw tokens, private keys or pairing
+secrets. - Validate ownership and references at the application layer. -
+Consider transactions for operations that must update multiple related
+records atomically.
+
+============================================================ 19.
+ADMINISTRATOR PANEL
+============================================================
+
+The administrator panel should be a separate protected web application,
+not a hidden ordinary-user screen.
+
+Suggested frontend: - React. - Vite. - Shared design system where
+practical. - Protected routes. - Server-enforced role-based access
+control.
+
+Admin navigation: 1. Overview. 2. User Management. 3. Device Management.
+4. Live Sessions. 5. Analytics. 6. Security Center. 7. Notifications. 8.
+Feedback and Reports. 9. Announcements. 10. Platform Settings. 11. Audit
+Logs. 12. Admin Accounts.
+
+Overview metrics: - Total registered users. - Active users. - Online
+devices. - Active streaming sessions. - Registered devices. - Failed
+connections. - Authentication failures. - Average session duration. -
+Application versions. - Server health. - Database health. - Recent
+security events.
+
+User management: - Search and filter users. - View account profile and
+status. - View registered devices. - View support-relevant
+information. - Suspend and restore accounts. - Revoke login sessions. -
+Handle account deletion requests according to policy.
+
+Device management: - View registered device records. - View app versions
+and last-seen status. - View connection failures. - Revoke trust. -
+Block compromised devices. - View supported capabilities.
+
+Live session monitoring: - Session identifiers. - Sender and receiver
+identifiers. - Session status. - Start time and duration. - Aggregate
+connection quality. - Error codes. - Reconnection events.
+
+Admin privacy boundaries: - Administrators should not see passwords. -
+Administrators should not access private encryption keys. -
+Administrators should not have an arbitrary ability to listen to active
+streams. - Show only operational metadata required for administration
+and support.
+
+Security Center: - Failed login attempts. - Suspicious activity. -
+Rate-limit events. - Device trust revocations. - Admin login history. -
+Privileged actions. - Security incidents. - Audit trail.
+
+Suggested admin roles: Super Admin: - Full platform configuration and
+privileged operations.
+
+User Support: - Support-relevant user and device information. - Limited
+account support actions.
+
+Security Admin: - Security events, device revocation and incident
+response.
+
+Analytics Admin: - Aggregated platform analytics.
+
+Content Admin: - Announcements and help documentation.
+
+Enforce all role permissions on the backend. Hiding buttons in the
+frontend is not authorization.
+
+Require confirmation and audit logging for sensitive actions such as
+suspension, deletion and access revocation.
+
+============================================================ 20.
+SECURITY AND PRIVACY MODEL
+============================================================
+
+Security areas: - Account authentication. - Password hashing. - Session
+management. - Device identity. - Secure pairing. - Signaling
+authorization. - Encrypted media transport. - Rate limiting. - Input
+validation. - Authorization and resource ownership. - Admin access
+control. - Audit logging. - Secure update delivery. - Secret
+management. - Data retention and deletion.
+
+Pairing principles: - Pairing codes should be short-lived. - Pairing
+should require approval by the intended device/user. - Pairing tokens
+should be unpredictable and single-use where possible. - Device trust
+should be revocable. - A device ID alone must not grant access.
+
+Media security: - Use an authenticated encrypted media transport. -
+WebRTC normally uses DTLS-SRTP for media protection. - Do not invent a
+custom cryptographic protocol. - Keep private keys and secrets out of
+ordinary application logs and database documents.
+
+Privacy: - Do not record audio content by default. - Collect minimal
+operational metadata. - Make analytics and diagnostics sharing
+transparent. - Provide account export and deletion workflows. -
+Establish clear retention policies.
+
+============================================================ 21. VISUAL
+DESIGN SYSTEM
+============================================================
+
+Suggested palette: - Main background: #090A0F. - Secondary background:
+#12141D. - Primary accent: #8B5CF6. - Secondary accent: #00D4FF. -
+Success: #29D391. - Warning: #FFB84D. - Error: #FF5364.
+
+Style: - Modern sans-serif typography such as Inter. - Cards with
+restrained depth. - Approximately 12-18 px corner radius. - Clear
+spacing and hierarchy. - Subtle transitions. - Consistent iconography. -
+Readable contrast. - Keyboard focus indicators. - Reduced-motion
+support.
+
+Visual identity: - Underground garage. - Cyberpunk lighting. - Graffiti
+textures used sparingly. - Music waveform motifs. -
+Street-racing-inspired artwork in optional decorative areas.
+
+Do not use heavy animations or decorative artwork where it slows down
+core workflows.
+
+============================================================ 22.
+PERFORMANCE AND QUALITY TARGETS
+============================================================
+
+Proposed initial engineering targets, not guarantees: - Pairing: aim for
+under 10 seconds. - Local connection setup: aim for under 5 seconds. -
+End-to-end audio latency: initial target around 100-150 ms under
+suitable local conditions. - Reconnection: aim for under 5 seconds where
+recovery is possible. - Startup: aim for under 3 seconds. - Idle CPU and
+memory: minimize and measure. - Audio interruptions: minimize and
+measure. - Security: authenticated and encrypted connections.
+
+Testing must cover: - End-to-end audio delay. - Audio quality. - Packet
+loss. - Jitter. - Wi-Fi interference. - Network changes. - Device
+sleep/wake. - App backgrounding. - Battery consumption. - Long-duration
+sessions. - Different audio devices. - Firewall restrictions. - Multiple
+app versions. - Reconnection and duplicate-session prevention.
+
+Latency must be measured end-to-end with a repeatable test. Network ping
+alone is not audio latency.
+
+============================================================ 23. FEATURE
+PRIORITIZATION
+============================================================
+
+Essential for V1: - Windows audio capture. - Android audio playback. -
+PC-to-Android local streaming. - Device discovery. - Secure pairing. -
+Start/stop controls. - Volume control. - Connection status. -
+Reconnection. - Basic diagnostics. - Useful error messages.
+
+Important after V1: - Android-to-PC streaming. - Multiple receivers. -
+Advanced device management. - Session history. - Cloud account
+synchronization. - Advanced statistics. - Saved audio profiles. -
+Equalizer.
+
+Future/experimental: - Internet streaming. - Remote device management. -
+Multi-room synchronization. - Advanced routing matrix. - More operating
+systems. - Advanced audio mixing.
+
+Reject or avoid initially: - Social feed. - In-app chat. - General file
+sharing. - Unrelated gaming/community systems. - Remote PC control
+without a clear use case. - Excessive decorative features. - Mandatory
+accounts for simple local use.
+
+============================================================ 24.
+IMPORTANT PRODUCT DEBATES AND DECISIONS
+============================================================
+
+Mandatory account? Argument for: cloud synchronization, account recovery
+and centralized device management. Argument against: friction for users
+who only want local streaming. Decision: support guest/local use where
+practical; make accounts optional initially.
+
+Backend relays all audio? Argument for: centralized routing and easier
+remote access. Argument against: extra latency, server bandwidth cost
+and dependency on server uptime. Decision: direct local media connection
+where possible; backend handles signaling and management.
+
+All platforms immediately? Argument for: larger potential audience.
+Argument against: many native audio implementations and more testing.
+Decision: Windows and Android first.
+
+Multiple receivers in V1? Argument for: compelling party and multi-room
+use. Argument against: synchronization, buffering and bandwidth
+complexity. Decision: prove one receiver first.
+
+Cyberpunk design everywhere? Argument for: strong visual identity.
+Argument against: readability and usability can suffer. Decision:
+functional interface with restrained cyberpunk styling.
+
+Internet streaming immediately? Argument for: use from anywhere.
+Argument against: NAT traversal, relay infrastructure, security and
+cost. Decision: local-first, internet support later.
+
+Mandatory admin access to streams? Argument for: support and
+troubleshooting. Argument against: serious privacy and trust concerns.
+Decision: admins see operational metadata only; no arbitrary listening
+access.
+
+============================================================ 25.
+DEVELOPMENT ROADMAP
+============================================================
+
+Phase 1 — Audio proof of concept: - Capture Windows system audio. -
+Encode audio. - Stream locally. - Receive and play on Android. - Measure
+latency, quality and stability.
+
+Phase 2 — Device connectivity: - Device discovery. - QR pairing. -
+Device identity. - Secure connection. - Reconnection. - Device
+management.
+
+Phase 3 — Frontend: - Home. - Devices. - Audio Studio. - Sessions. -
+Settings. - Profile. - Diagnostics.
+
+Phase 4 — Backend and database: - Authentication. - User profiles. -
+Device registry. - Pairing services. - Signaling. - Session metadata. -
+Settings synchronization. - Security middleware.
+
+Phase 5 — Admin dashboard: - Overview. - User management. - Device
+management. - Session metadata. - Analytics. - Security. - Feedback. -
+Audit logs.
+
+Phase 6 — Release quality: - Performance testing. - Security testing. -
+Network failure testing. - Battery testing. - Windows installer. -
+Android APK. - Update mechanism. - Documentation. - Support and
+troubleshooting.
+
+Do not build every feature at once. Each phase should have working
+acceptance tests before the next phase expands the scope.
+
+============================================================ 26. TESTING
+AND ACCEPTANCE CRITERIA
+============================================================
+
+Core acceptance tests: 1. Windows client detects a supported audio
+source. 2. Android client can be discovered or paired securely. 3. User
+explicitly approves pairing. 4. A stream can start and stop reliably. 5.
+Audio is audible on the receiver. 6. Volume and mute work as expected.
+7. Connection status is accurate. 8. Network interruption is detected.
+9. Recovery does not create duplicate streams. 10. Unsupported or
+blocked audio capture is explained. 11. Users cannot access another
+user’s devices or sessions. 12. Admin-only operations are rejected for
+ordinary users. 13. Secrets are not exposed in logs. 14. Session
+metadata is saved according to user settings and retention policy. 15.
+App remains stable during long sessions.
+
+============================================================ 27. RISKS
+AND LIMITATIONS
+============================================================
+
+Technical risks: - Android audio capture restrictions. - Protected audio
+and source-app capture policies. - Wi-Fi interference. - Network packet
+loss and jitter. - NAT traversal for internet use. - Audio-device
+changes. - OS background execution restrictions. - Battery
+consumption. - Multiple receiver synchronization. - Cross-platform codec
+and audio-format compatibility.
+
+Product risks: - Existing alternatives already provide some wireless
+audio features. - Users may not see enough value if pairing is
+difficult. - Overly complex settings can overwhelm users. - Decorative
+design can distract from reliability. - Cloud infrastructure can add
+cost without improving local streaming.
+
+Mitigation: - Focus on a narrow initial use case. - Benchmark against
+existing solutions. - Prioritize easy pairing and reliability. - Provide
+clear troubleshooting. - Keep local streaming independent of cloud
+availability where possible. - Add features only when user value
+justifies their cost.
+
+============================================================ 28. FINAL
+PRODUCT DEFINITION
+============================================================
+
+The product is a cross-device wireless audio application for Windows and
+Android.
+
+Its initial purpose is to stream Windows system audio to an Android
+device over a local network using secure pairing and real-time audio
+transport.
+
+The application includes: - A desktop client. - An Android client. - A
+native audio engine. - Device discovery and pairing. - Audio Studio and
+session controls. - User profiles and optional accounts. - Settings for
+audio, devices, personalization, security, privacy, notifications,
+accessibility, storage and application behaviour. - Diagnostics and
+troubleshooting. - A Node.js backend. - A MongoDB database. - A separate
+administrator dashboard. - Security, audit and support systems.
+
+The product should be visually distinctive but operationally simple.
+
+The first milestone is not a complete dashboard or a large feature list.
+It is a reliable end-to-end audio stream between a Windows PC and an
+Android phone.
+
+A perfect product is not the product with the most features. It is the
+product in which every feature has a clear purpose, works reliably,
+protects user privacy and makes the core experience better.
+
+============================================================ END OF
+DOCUMENT ============================================================
