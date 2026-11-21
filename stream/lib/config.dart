@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 // Point this at your deployed backend (or pass --dart-define=API_URL=https://api.example.com)
-const apiUrl = String.fromEnvironment('API_URL', defaultValue: 'http://localhost:4000');
+const apiUrl = String.fromEnvironment('API_URL', defaultValue: 'https://gang-sound-app.vercel.app');
 // Bump this with every release; the update system compares against it
 const appVersion = '1.0.0';
 

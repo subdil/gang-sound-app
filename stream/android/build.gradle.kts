@@ -1,3 +1,15 @@
+// Safety net: force every plugin to compile against a recent Android SDK.
+// This block MUST stay above the evaluationDependsOn block below.
+subprojects {
+    val applyFix: Project.() -> Unit = {
+        val ext = extensions.findByName("android")
+        if (ext is com.android.build.api.dsl.LibraryExtension) {
+            ext.compileSdk = 36
+        }
+    }
+    if (state.executed) applyFix() else afterEvaluate { applyFix() }
+}
+
 allprojects {
     repositories {
         google()
@@ -5,10 +17,7 @@ allprojects {
     }
 }
 
-val newBuildDir: Directory =
-    rootProject.layout.buildDirectory
-        .dir("../../build")
-        .get()
+val newBuildDir: Directory = rootProject.layout.buildDirectory.dir("../../build").get()
 rootProject.layout.buildDirectory.value(newBuildDir)
 
 subprojects {
